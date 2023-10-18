@@ -5,8 +5,9 @@ functions named `log-<level>`, where `<level>` is a log level name.
 
 ## Log levels
 
-Five levels are supported, and can be toggled with the `LOG_LEVEL` environment
-variable, either using the level name or its corresponding code number:
+Multiple levels are supported, and can be toggled with the `EZLOG_LEVEL`
+environment variable, either using the level name or its corresponding code
+number:
 
 | Log level name | Log level code | Corresponding log function |
 | :------------- | :------------- | :------------------------- |
@@ -16,8 +17,9 @@ variable, either using the level name or its corresponding code number:
 | `info`         | `4`            | `log-info`                 |
 | `debug`        | `5`            | `log-debug`                |
 
-To completely disable logging, set `LOG_LEVEL=0` (or really, just anything less
-than `1`).
+To completely disable logging, set `EZLOG_LEVEL=0` (or really, just anything
+less than `1`). It *must* be set though, because an unset `EZLOG_LEVEL` will
+default to the `info` level.
 
 ## ANSI color output
 
