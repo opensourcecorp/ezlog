@@ -4,7 +4,7 @@
 functions named `log-<level>`, where `<level>` is a log level name found in the
 table below.
 
-[![Example log output in a terminal that supports colors](./img/example.png)]
+![Example log output in a terminal that supports colors](./img/example.png)
 
 ## How to use
 
