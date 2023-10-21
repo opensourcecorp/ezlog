@@ -1,3 +1,3 @@
 test:
 	@shellcheck ./src/*
-	@bats src/test.bats
+	@bats ./src/test.bats
