@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export LOG_LEVEL_FATAL=1
-export LOG_LEVEL_ERROR=2
-export LOG_LEVEL_WARN=3
-export LOG_LEVEL_INFO=4
-export LOG_LEVEL_DEBUG=5
+export EZLOG_LEVEL_FATAL=1
+export EZLOG_LEVEL_ERROR=2
+export EZLOG_LEVEL_WARN=3
+export EZLOG_LEVEL_INFO=4
+export EZLOG_LEVEL_DEBUG=5
 
-# ANSI color constants for log messages
+# ANSI color constants for log messages, starting as color-coded and removing
+# them if terminal does not support enough colors
 export FATAL_COLOR='\033[0;31m' # red
 export ERROR_COLOR='\033[1;31m' # light red
 export WARN_COLOR='\033[1;33m'  # yellow
@@ -15,31 +16,42 @@ export INFO_COLOR='\033[1;32m'  # light green
 export DEBUG_COLOR='\033[1;35m' # light purple
 export RESET_COLOR='\033[0m'
 
+_set-for-term-colors() {
+  if [[ "$(tput colors)" -lt 8 ]] ; then
+    export FATAL_COLOR=''
+    export ERROR_COLOR=''
+    export WARN_COLOR=''
+    export INFO_COLOR=''
+    export DEBUG_COLOR=''
+    export RESET_COLOR=''
+  fi
+}
+
 _check-log-level() {
   # Defaults to info logs if not set
-  LOG_LEVEL="${LOG_LEVEL:-${LOG_LEVEL_INFO}}"
+  EZLOG_LEVEL="${EZLOG_LEVEL:-${EZLOG_LEVEL_INFO}}"
 
   # Check for the possible string values of log levels as well. There is notably
   # no default case because we don't want to overwrite a valid integer either.
-  case "${LOG_LEVEL}" in
+  case "${EZLOG_LEVEL}" in
     fatal)
-      LOG_LEVEL="${LOG_LEVEL_FATAL}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_FATAL}"
     ;;
     error)
-      LOG_LEVEL="${LOG_LEVEL_ERROR}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_ERROR}"
     ;;
     warn)
-      LOG_LEVEL="${LOG_LEVEL_WARN}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_WARN}"
     ;;
     info)
-      LOG_LEVEL="${LOG_LEVEL_INFO}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_INFO}"
     ;;
     debug)
-      LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
     ;;
   esac
 
-  printf '%s' "${LOG_LEVEL}"
+  printf '%s' "${EZLOG_LEVEL}"
 }
 
 _print-log-timestamp() {

@@ -1,31 +1,39 @@
 # ezlog - Simple unstructured logging for Bash
 
 `ezlog` provides an interface for simple logging in `bash` programs. It contains
-functions named `log-<level>`, where `<level>` is a log level name found in the
-table below.
+functions named `log-<level>`, where `<level>` is a log level name.
 
-![Example log output in a terminal that supports colors](./img/example.png)
+## Log levels
+
+Multiple levels are supported, and can be toggled with the `EZLOG_LEVEL`
+environment variable, either using the level name or its corresponding code
+number:
+
+| Log level name | Log level code | Corresponding log function |
+| :------------- | :------------- | :------------------------- |
+| `fatal`        | `1`            | `log-fatal`                |
+| `error`        | `2`            | `log-error`                |
+| `warn`         | `3`            | `log-warn`                 |
+| `info`         | `4`            | `log-info`                 |
+| `debug`        | `5`            | `log-debug`                |
+
+To completely disable logging, set `EZLOG_LEVEL=0` (or really, just anything
+less than `1`). It *must* be set though, because an unset `EZLOG_LEVEL` will
+default to the `info` level.
+
+## ANSI color output
+
+`ezlog` defaults to printing colored output. It will try determine if your
+terminal supports color output or not, though:
+
+![Example log output in a terminal that supports colors](./img/example-color.png)
+
+![Example log output in a terminal that supports no colors](./img/example-no-color.png)
 
 ## How to use
 
 To use, just clone this repo locally, and source the `src/main.sh` file. Then,
 the `log-*` functions will be available to use in your scripts.
-
-## Log levels
-
-Five levels are supported, and can be toggled with the `LOG_LEVEL` environment
-variable, either using the level name or its corresponding code number:
-
-| Log level name | Log level code |
-| :------------- | :------------- |
-| `fatal`        | `1`            |
-| `error`        | `2`            |
-| `warn`         | `3`            |
-| `info`         | `4`            |
-| `debug`        | `5`            |
-
-To completely disable logging, set `LOG_LEVEL=0` (or really, just anything less
-than `1`).
 
 ## Developing
 
