@@ -26,3 +26,8 @@ variable, either using the level name or its corresponding code number:
 
 To completely disable logging, set `LOG_LEVEL=0` (or really, just anything less
 than `1`).
+
+## Developing
+
+Developing `ezlog` requires `bash`, the `bats` testing framework, and the
+`shellcheck` linter.

@@ -1,2 +1,3 @@
 test:
-	@bash src/test.sh
+	@shellcheck ./src/*
+	@bats src/test.bats
