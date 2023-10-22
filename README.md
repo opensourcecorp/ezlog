@@ -25,7 +25,7 @@ default to the `info` level.
 
 ## ANSI color output
 
-`ezlog` defaults to printing colored output. It will try determine if your
+`ezlog` defaults to printing colored output. It will try to determine if your
 terminal supports color output or not, though:
 
 ![Example log output in a terminal that supports colors](./img/example-color.png)
