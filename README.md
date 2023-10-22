@@ -3,6 +3,8 @@
 `ezlog` provides an interface for simple logging in `bash` programs. It contains
 functions named `log-<level>`, where `<level>` is a log level name.
 
+![Example log output in a terminal that supports colors](./img/example-color.png)
+
 ## Log levels
 
 Multiple levels are supported, and can be toggled with the `EZLOG_LEVEL`
@@ -32,8 +34,18 @@ terminal supports color output or not, though:
 
 ## How to use
 
-To use, just clone this repo locally, and source the `src/main.sh` file. Then,
-the `log-*` functions will be available to use in your scripts.
+The recommended way to get `ezlog` & use the library is by way of
+[`bashpack`](https://github.com/opensourcecorp/bashpack):
+
+```bash
+source "$(bashpack mainpath 'https://github.com/opensourcecorp/ezlog')"
+```
+
+Then, the `log-*` functions will be available to use in your scripts.
+
+Realistically, you can get `ezlog` however you want though -- the lowest-common
+denominator is to just clone this repo locally, and `source` the `src/main.sh`
+file.
 
 ## Developing
 
