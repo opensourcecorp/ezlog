@@ -3,7 +3,7 @@
 source "./src/main.sh"
 
 @test "all logs print when maximum log level is set" {
-  LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+  EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
   local failures=0
 
   log-debug test | grep test || {
@@ -32,21 +32,21 @@ source "./src/main.sh"
   fi
 }
 
-# NOTE: For the following LOG_LEVEL tests, we're counting bytes passed through
+# NOTE: For the following EZLOG_LEVEL tests, we're counting bytes passed through
 # the pipe and not using `grep`, because for some reason `grep` fails in BOTH
 # positive and negative cases
 @test "debug logs disabled at various higher levels" {
   local failures=0
 
   for level in \
-    "${LOG_LEVEL_INFO}" \
-    "${LOG_LEVEL_WARN}" \
-    "${LOG_LEVEL_ERROR}" \
-    "${LOG_LEVEL_FATAL}" \
+    "${EZLOG_LEVEL_INFO}" \
+    "${EZLOG_LEVEL_WARN}" \
+    "${EZLOG_LEVEL_ERROR}" \
+    "${EZLOG_LEVEL_FATAL}" \
   ; do
-    LOG_LEVEL="${level}"
+    EZLOG_LEVEL="${level}"
     [[ "$(log-debug test | wc -c)" -eq 0 ]] || {
-      LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had debug log output at level %s and should not\n' "${level}"
       failures=$((failures+1))
     }
@@ -61,13 +61,13 @@ source "./src/main.sh"
   local failures=0
 
   for level in \
-    "${LOG_LEVEL_WARN}" \
-    "${LOG_LEVEL_ERROR}" \
-    "${LOG_LEVEL_FATAL}" \
+    "${EZLOG_LEVEL_WARN}" \
+    "${EZLOG_LEVEL_ERROR}" \
+    "${EZLOG_LEVEL_FATAL}" \
   ; do
-    LOG_LEVEL="${level}"
+    EZLOG_LEVEL="${level}"
     [[ "$(log-info test | wc -c)" -eq 0 ]] || {
-      LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had info log output at level %s and should not\n' "${level}"
       failures=$((failures+1))
     }
@@ -82,12 +82,12 @@ source "./src/main.sh"
   local failures=0
 
   for level in \
-    "${LOG_LEVEL_ERROR}" \
-    "${LOG_LEVEL_FATAL}" \
+    "${EZLOG_LEVEL_ERROR}" \
+    "${EZLOG_LEVEL_FATAL}" \
   ; do
-    LOG_LEVEL="${level}"
+    EZLOG_LEVEL="${level}"
     [[ "$(log-warn test | wc -c)" -eq 0 ]] || {
-      LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had warn log output at level %s and should not\n' "${level}"
       failures=$((failures+1))
     }
@@ -102,11 +102,11 @@ source "./src/main.sh"
   local failures=0
 
   for level in \
-    ${LOG_LEVEL_FATAL} \
+    ${EZLOG_LEVEL_FATAL} \
   ; do
-    LOG_LEVEL="${level}"
+    EZLOG_LEVEL="${level}"
     [[ "$(log-error test | wc -c)" -eq 0 ]] || {
-      LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+      EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had error log output at level %s and should not\n' "${level}"
       failures=$((failures+1))
     }
@@ -118,9 +118,9 @@ source "./src/main.sh"
 }
 
 @test "all logs can be disabled" {
-  LOG_LEVEL=0
+  local EZLOG_LEVEL=0
   [[ "$( (log-fatal test || true) 2>&1 | wc -c)" -eq 0 ]] || {
-    LOG_LEVEL="${LOG_LEVEL_DEBUG}"
+    EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
     printf 'had log output at level %s and should not\n' 0
     return 0
   }
