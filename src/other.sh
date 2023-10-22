@@ -55,5 +55,8 @@ _check-log-level() {
 }
 
 _print-log-timestamp() {
-  date '+%Y-%m-%dT%H:%M:%S'
+  EZLOG_TIMESTAMP="${EZLOG_TIMESTAMP:-true}"
+  if [[ "${EZLOG_TIMESTAMP}" == true ]] ; then
+    printf '[%s] ' "$(date '+%Y-%m-%dT%H:%M:%S')"
+  fi
 }

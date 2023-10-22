@@ -122,6 +122,14 @@ source "./src/main.sh"
   [[ "$( (log-fatal test || true) 2>&1 | wc -c)" -eq 0 ]] || {
     EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
     printf 'had log output at level %s and should not\n' 0
-    return 0
+    return 1
+  }
+}
+
+@test "timestamps can be disabled" {
+  year="$(date '+%Y')"
+  EZLOG_TIMESTAMP=false log-info test | grep -v "${year}" || {
+    printf 'found timestamp and should not have\n'
+    return 1
   }
 }
