@@ -44,7 +44,7 @@ source "./src/main.sh"
     "${EZLOG_LEVEL_ERROR}" \
     "${EZLOG_LEVEL_FATAL}" \
   ; do
-    EZLOG_LEVEL="${level}"
+    local EZLOG_LEVEL="${level}"
     [[ "$(log-debug test | wc -c)" -eq 0 ]] || {
       EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had debug log output at level %s and should not\n' "${level}"
@@ -65,7 +65,7 @@ source "./src/main.sh"
     "${EZLOG_LEVEL_ERROR}" \
     "${EZLOG_LEVEL_FATAL}" \
   ; do
-    EZLOG_LEVEL="${level}"
+    local EZLOG_LEVEL="${level}"
     [[ "$(log-info test | wc -c)" -eq 0 ]] || {
       EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had info log output at level %s and should not\n' "${level}"
@@ -85,7 +85,7 @@ source "./src/main.sh"
     "${EZLOG_LEVEL_ERROR}" \
     "${EZLOG_LEVEL_FATAL}" \
   ; do
-    EZLOG_LEVEL="${level}"
+    local EZLOG_LEVEL="${level}"
     [[ "$(log-warn test | wc -c)" -eq 0 ]] || {
       EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had warn log output at level %s and should not\n' "${level}"
@@ -104,7 +104,7 @@ source "./src/main.sh"
   for level in \
     ${EZLOG_LEVEL_FATAL} \
   ; do
-    EZLOG_LEVEL="${level}"
+    local EZLOG_LEVEL="${level}"
     [[ "$(log-error test | wc -c)" -eq 0 ]] || {
       EZLOG_LEVEL="${EZLOG_LEVEL_DEBUG}"
       printf 'had error log output at level %s and should not\n' "${level}"
@@ -127,6 +127,7 @@ source "./src/main.sh"
 }
 
 @test "timestamps can be disabled" {
+  local year
   year="$(date '+%Y')"
   EZLOG_TIMESTAMP=false log-info test | grep -v "${year}" || {
     printf 'found timestamp and should not have\n'
