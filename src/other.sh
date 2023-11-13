@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# TERM fallback
+TERM="${TERM:-}"
+if [[ -z "${TERM}" ]] ; then
+  TERM='xterm-mono'
+fi
+export TERM
+
 export EZLOG_LEVEL_FATAL=1
 export EZLOG_LEVEL_ERROR=2
 export EZLOG_LEVEL_WARN=3

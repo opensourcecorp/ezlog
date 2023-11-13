@@ -4,6 +4,13 @@ set -euo pipefail
 # shellcheck disable=SC1091,SC2046,SC2086
 source "$(dirname $(realpath ${BASH_SOURCE[0]}))"/other.sh
 
+# TERM fallback
+TERM="${TERM:-}"
+if [[ -z "${TERM}" ]] ; then
+  TERM='xterm-mono'
+fi
+export TERM
+
 log-fatal() {
   EZLOG_LEVEL="$(_check-log-level)"
   _set-for-term-colors
